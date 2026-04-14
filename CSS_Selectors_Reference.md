@@ -5,6 +5,8 @@ Selenium delegates CSS selector evaluation to the browser's native `querySelecto
 get everything the browser supports; essentially CSS Selectors Level 4, minus a few pseudo-classes that don't make 
 sense for element location.
 
+Note: CSS 'Levels' just refer to different versions of CSS. Level 4 happens to be the latest level.
+
 Exercises target [saucedemo.com](https://www.saucedemo.com), which uses `data-test` attributes consistently and makes an excellent teaching 
 target for modern, resilient selector patterns.
 
@@ -52,7 +54,8 @@ driver.findElement(By.cssSelector(".btn-primary"));    // class selector
 driver.findElement(By.cssSelector("*"));               // universal selector
 ```
 
-Type selectors match the element's tag name (case-insensitive in HTML). The universal `*` matches any element and is most useful in combinators. IDs use `#`, classes use `.`, and both can be chained without whitespace to intersect on the same element:
+Type selectors match the element's tag name (case-insensitive in HTML). The universal `*` matches any element and is most useful in combinators. 
+IDs use `#`, classes use `.`, and both can be chained without whitespace to intersect on the same element:
 
 ```java
 // <button id="submit" class="btn btn-primary disabled">
@@ -90,9 +93,14 @@ By.cssSelector("html[lang|='en']");                    // en, en-US, en-GB, ...
 By.cssSelector("a[title*='login' i]");                 // case-insensitive contains
 ```
 
-A subtlety worth internalizing: `[class~="foo"]` is functionally identical to `.foo` because the `class` attribute is defined as space-separated. By contrast, `[class*="foo"]` matches any substring, so it would also match `foobar` and `not-foo`; useful for loose matching, dangerous when you don't want it.
+**Notes:** 
 
-Another subtlety: attribute selectors operate on the attribute in the HTML source, not the IDL property. For most attributes these agree, but `value` on an `<input>` is notorious; `[value='x']` matches the initial HTML attribute, not what the user typed. A frequent source of "why doesn't my selector work" in Selenium tests.
+`[class~="foo"]` is functionally identical to `.foo` because the `class` attribute is defined as space-separated. 
+By contrast, `[class*="foo"]` matches any substring, so it would also match `foobar` and `not-foo`; useful for loose matching, dangerous when you don't want it.
+
+Attribute selectors operate on the attribute in the HTML source, not the JavaScript property. For most attributes these agree, 
+but `value` on an `<input>` is notorious; `[value='x']` matches the initial HTML attribute, not what the user typed. 
+A frequent source of "why doesn't my selector work" in Selenium tests.
 
 ## 3. Combinators: Navigating the Tree
 
@@ -105,7 +113,12 @@ By.cssSelector("label + input");        // adjacent sibling: input immediately a
 By.cssSelector("h2 ~ p");               // general sibling: any p after an h2, same parent
 ```
 
-The descendant combinator (whitespace) is the workhorse but the most expensive; the browser walks the entire subtree. The child combinator (`>`) is stricter and usually a better choice when the DOM structure is known and stable. The adjacent sibling (`+`) and general sibling (`~`) combinators only look *forward* among siblings; there is no "previous sibling" or "parent" combinator in traditional CSS. This is historically the most important limitation of CSS selectors versus XPath, and the reason people reached for XPath to locate a row by its cell's text and then navigate back up to the row. (See `:has()` in Section 7 for the modern answer.)
+The descendant combinator (whitespace) is the workhorse but the most expensive; the browser walks the entire subtree. 
+The child combinator (`>`) is stricter and usually a better choice when the DOM structure is known and stable. 
+The adjacent sibling (`+`) and general sibling (`~`) combinators only look *forward* among siblings; there is no 
+"previous sibling" or "parent" combinator in traditional CSS. This is historically the most important limitation of 
+CSS selectors versus XPath, and the reason people reached for XPath to locate a row by its cell's text and then 
+navigate back up to the row. (See `:has()` in Section 7 for the modern answer.)
 
 Combinators compose freely:
 
@@ -113,7 +126,14 @@ Combinators compose freely:
 By.cssSelector("table.inventory > tbody > tr.selected + tr > td:first-child");
 ```
 
-Read left-to-right: a table with class `inventory`, its direct `tbody` child, a `tr.selected` direct child of that, the `tr` immediately following, and the first `td` direct child of *that*.
+Read left-to-right: a table with class `inventory`, its direct `tbody` child, a `tr.selected` direct child of that, 
+the `tr` immediately following, and the first `td` direct child of *that*
+
+Note: `:first-child` 
+
+The colon indicates a pseudo-class, which is an element state or relationship to other elements. `:first-child` simply 
+means the first child of the parent element. See section 5, below.
+
 
 ## 4. Selector Lists (Grouping)
 
@@ -124,7 +144,8 @@ By.cssSelector("h1, h2, h3");
 By.cssSelector("input[type='submit'], button[type='submit']");
 ```
 
-`findElements` returns all matches from all branches of the union, in document order. The historical rule is that if *any* selector in the list is invalid, the entire list is discarded; Level 4 introduces `:is()` with forgiving parsing to avoid this (Section 7).
+`findElements` returns all matches from all branches of the union, in document order. The historical rule is that 
+if *any* selector in the list is invalid, the entire list is discarded; Level 4 introduces `:is()` with forgiving parsing to avoid this (Section 7).
 
 ## 5. Structural Pseudo-Classes
 
@@ -142,9 +163,12 @@ By.cssSelector("tr:nth-child(3n)");    // every third row
 By.cssSelector("tr:nth-last-child(1)");// counting from the end
 ```
 
-The formula is `an+b` where `n` starts at 0 and increments. `2n` is every even, `2n+1` every odd, `3n+2` the 2nd/5th/8th, and so on. You can also write `-n+3` to mean "the first three."
+The formula is `an+b` where `n` starts at 0 and increments. `2n` is every even, `2n+1` every odd, `3n+2` the 2nd/5th/8th, and so on. 
+You can also write `-n+3` to mean "the first three."
 
-There's a critical gotcha with `:nth-child` that catches even experienced engineers: it counts among *all siblings*, not siblings of the same type. If your parent contains a mix of elements, `li:nth-child(2)` means "the second child of its parent, which also happens to be an `li`"; if the second child is a `div`, the selector matches nothing. The type-aware variants fix this:
+There's a critical gotcha with `:nth-child` that catches even experienced engineers: it counts among *all siblings*, 
+not siblings of the same type. If your parent contains a mix of elements, `li:nth-child(2)` means "the second child 
+of its parent, which also happens to be an `li`"; if the second child is a `div`, the selector matches nothing. The type-aware variants fix this:
 
 ```java
 By.cssSelector("li:first-of-type");
@@ -154,7 +178,8 @@ By.cssSelector("li:nth-last-of-type(2)");
 By.cssSelector("li:only-of-type");
 ```
 
-For tables where `<tbody>` contains only `<tr>` elements, `nth-child` and `nth-of-type` are equivalent; but in heterogeneous containers they diverge, and `nth-of-type` is almost always what you actually mean.
+For tables where `<tbody>` contains only `<tr>` elements, `nth-child` and `nth-of-type` are equivalent; but in heterogeneous 
+containers they diverge, and `nth-of-type` is almost always what you actually mean.
 
 There's also `:root` (the `<html>` element) and `:empty` (elements with no children, not even text nodes; whitespace counts as a text node, so beware).
 
@@ -175,7 +200,9 @@ By.cssSelector("input:focus");          // currently focused
 By.cssSelector(":target");              // element whose ID matches the URL fragment
 ```
 
-`:checked` deserves special mention because it reflects the *current* state, unlike the `checked` attribute, which reflects the initial HTML. If the user (or your test) clicks a checkbox, `[checked]` won't match but `:checked` will. This is the canonical example of the attribute-vs-property distinction biting you in tests.
+`:checked` deserves special mention because it reflects the *current* state, unlike the `checked` attribute, 
+which reflects the initial HTML. If the user (or your test) clicks a checkbox, `[checked]` won't match but 
+`:checked` will. This is the canonical example of the attribute-vs-property distinction biting you in tests.
 
 `:valid`, `:invalid`, `:in-range`, and `:out-of-range` exist for form validation state but are less commonly used in Selenium tests.
 
@@ -184,8 +211,8 @@ By.cssSelector(":target");              // element whose ID matches the URL frag
 The Level 3 `:not()` takes a simple selector and inverts it:
 
 ```java
-By.cssSelector("input:not([type='hidden'])");
-By.cssSelector("li:not(.disabled):not(.hidden)");
+By.cssSelector("input:not([type='hidden'])");        // all input elements except for ones with a type='hidden' attribute/value
+By.cssSelector("li:not(.disabled):not(.hidden)");    // all line elements except for lines that are both disabled and hidden
 By.cssSelector("tr:not(:first-child)");              // all rows except the header row
 ```
 
@@ -198,7 +225,8 @@ By.cssSelector(":where(section, article) .title");   // like :is but zero specif
 By.cssSelector("li:has(> a.active)");                // has: parent selector! li containing an active anchor child
 ```
 
-`:has()` is the long-awaited "parent selector." Before it landed in browsers (Chrome 105, Safari 15.4, Firefox 121), the absence of a parent combinator was *the* reason Selenium users fell back to XPath. It's now genuinely usable:
+`:has()` is the long-awaited "parent selector." Before it landed in browsers (Chrome 105, Safari 15.4, Firefox 121), 
+the absence of a parent combinator was *the* reason Selenium users fell back to XPath. It's now genuinely usable:
 
 ```java
 // A row that contains a checked checkbox
@@ -207,17 +235,25 @@ By.cssSelector("tr:has(input:checked)");
 By.cssSelector(".inventory_item:has([data-test^='remove'])");
 ```
 
-The one thing `:has()` still can't do is match on text content; for that, XPath's `contains(text(), ...)` remains the only option. Keep this in mind; it's the main residual reason to reach for XPath.
+The one thing `:has()` still can't do is match on text content; for that, XPath's `contains(text(), ...)` 
+remains the only option. Keep this in mind; it's the main residual reason to reach for XPath.
 
-`:is()` and `:where()` differ only in CSS specificity, which is irrelevant to Selenium since you're only using them for matching. Both accept a selector list and match if any branch matches, with forgiving parsing; if one branch is invalid, the others still work.
+`:is()` and `:where()` differ only in CSS specificity, which is irrelevant to Selenium since you're only 
+using them for matching. Both accept a selector list and match if any branch matches, with forgiving parsing; 
+if one branch is invalid, the others still work.
 
 ## 8. Pseudo-Elements (and Why They Don't Help You)
 
-CSS also has pseudo-*elements* (`::before`, `::after`, `::first-line`, `::placeholder`, etc.), written with double colons. These are generated or abstract boxes that don't correspond to real DOM nodes, so Selenium cannot locate them with `findElement`. If you need to assert on content generated by `::before`, use `JavascriptExecutor` with `getComputedStyle(el, '::before').getPropertyValue('content')`. Don't waste time trying `By.cssSelector("div::before")` and wondering why it throws.
+CSS also has pseudo-*elements* (`::before`, `::after`, `::first-line`, `::placeholder`, etc.), written with double colons. 
+These are generated or abstract boxes that don't correspond to real DOM nodes, so Selenium cannot locate them with 
+`findElement`. If you need to assert on content generated by `::before`, use `JavascriptExecutor` with 
+`getComputedStyle(el, '::before').getPropertyValue('content')`. 
+Don't waste time trying `By.cssSelector("div::before")` and wondering why it throws.
 
 ## 9. Escaping and Quoting
 
-When attribute values or IDs contain special characters, you need to escape them. This matters in practice because modern frameworks generate IDs with colons, slashes, and brackets.
+When attribute values or IDs contain special characters, you need to escape them. This matters in practice because 
+modern frameworks generate IDs with colons, slashes, and brackets.
 
 ```java
 // <div id="user:profile[0]">
@@ -226,7 +262,9 @@ By.cssSelector("#user\\:profile\\[0\\]");              // backslash-escape speci
 By.cssSelector("[id='user:profile[0]']");
 ```
 
-Note the double backslash in the Java string literal; one for Java, one for CSS. For anything non-trivial, the attribute-selector form is more readable and avoids the double-escaping headache. **When an ID looks weird, reach for `[id='...']` instead of `#...`.**
+Note the double backslash in the Java string literal; one for Java, one for CSS. For anything non-trivial, 
+the attribute-selector form is more readable and avoids the double-escaping headache. 
+**When an ID looks weird, reach for `[id='...']` instead of `#...`.**
 
 Quotes inside attribute selectors can be either single or double; pick whichever doesn't collide with your Java string:
 
@@ -239,26 +277,36 @@ By.cssSelector("input[placeholder=\"Enter your name\"]");
 
 Knowing the limits is what separates junior from senior selector work. CSS selectors in Selenium cannot:
 
-- **Match on text content.** No `:contains()`; it was proposed and dropped. XPath's `//button[text()='Login']` or `//button[contains(., 'Login')]` has no CSS equivalent.
-- **Walk backward to ancestors by arbitrary depth.** `:has()` closes most of this gap, but it's forward-scoped from a starting element; there's no "give me the ancestor matching X" operator. XPath's `ancestor::` axis does this directly.
-- **Match on computed style.** CSS selectors match on the DOM, not on rendered appearance. An element hidden by `display: none` still matches; use `WebElement.isDisplayed()` to filter.
+- **Match on text content.** No `:contains()`; it was proposed and dropped. XPath's `//button[text()='Login']` 
+or `//button[contains(., 'Login')]` has no CSS equivalent.
+- **Walk backward to ancestors by arbitrary depth.** `:has()` closes most of this gap, but it's forward-scoped 
+from a starting element; there's no "give me the ancestor matching X" operator. XPath's `ancestor::` axis does this directly.
+- **Match on computed style.** CSS selectors match on the DOM, not on rendered appearance. An element hidden by 
+`display: none` still matches; use `WebElement.isDisplayed()` to filter.
 - **Match on arbitrary JavaScript conditions.** For that, you're in `JavascriptExecutor` territory.
 
-Rule of thumb: reach for CSS by default because it's faster, more readable, and the engine is native to the browser; reach for XPath specifically when you need text matching, ancestor navigation, or complex positional logic across the tree.
+Rule of thumb: reach for CSS by default because it's faster, more readable, and the engine is native to the browser; 
+reach for XPath specifically when you need text matching, ancestor navigation, or complex positional logic across the tree.
 
 ## 11. Selenium-Specific Notes
 
-- `By.cssSelector` throws `InvalidSelectorException` on malformed selectors, not `NoSuchElementException`. Worth distinguishing so a typo doesn't masquerade as a missing element.
-- `findElement` returns the first match in document order; `findElements` returns all matches. "First" means first in tree traversal, which is not necessarily first visually when CSS reorders with flex/grid.
-- You can scope a search to a subtree by calling `findElement` on an existing `WebElement`. The CSS selector is evaluated relative to that element; selectors beginning with a combinator (e.g., `> .child`) are supported by the browser but not always portable; prefer `.child` or `:scope > .child`.
+- `By.cssSelector` throws `InvalidSelectorException` on malformed selectors, not `NoSuchElementException`. 
+Worth distinguishing so a typo doesn't masquerade as a missing element.
+- `findElement` returns the first match in document order; `findElements` returns all matches. "First" means first in 
+tree traversal, which is not necessarily first visually when CSS reorders with flex/grid.
+- You can scope a search to a subtree by calling `findElement` on an existing `WebElement`. The CSS selector is 
+evaluated relative to that element; selectors beginning with a combinator (e.g., `> .child`) are supported by 
+the browser but not always portable; prefer `.child` or `:scope > .child`.
 - Selenium 4 added `RelativeLocator` (`By.below(...)`, `By.toRightOf(...)`) for positional queries that CSS can't express.
-- Performance-wise, CSS selectors are very fast; IDs and classes are indexed by the browser. The cost is almost always in the WebDriver-to-browser round-trip, not in selector evaluation. Optimize for readability and resilience to DOM changes, not for shaved microseconds.
+- Performance-wise, CSS selectors are very fast; IDs and classes are indexed by the browser. The cost is almost 
+always in the WebDriver-to-browser round-trip, not in selector evaluation. Optimize for readability and resilience to DOM changes, not for shaved microseconds.
 
 ---
 
 # Part 2 Exercises on saucedemo.com
 
-Work through each exercise in your IDE before expanding the solution. Setup: all exercises assume a `WebDriver driver` already logged in with `standard_user` / `secret_sauce` and sitting on `/inventory.html`, unless stated otherwise.
+Work through each exercise in your IDE before expanding the solution. Setup: all exercises assume a `WebDriver driver` 
+already logged in with `standard_user` / `secret_sauce` and sitting on `/inventory.html`, unless stated otherwise.
 
 ## Section 1: Basics (ID, class, type)
 
