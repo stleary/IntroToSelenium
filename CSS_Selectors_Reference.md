@@ -1,8 +1,14 @@
 # CSS Selectors for Selenium WebDriver
 
-A complete reference and hands-on exercise set for locating elements with CSS selectors in Selenium WebDriver (Java). Selenium delegates CSS selector evaluation to the browser's native `querySelector`/`querySelectorAll` engine, so you get everything the browser supports; essentially CSS Selectors Level 4, minus a few pseudo-classes that don't make sense for element location.
+A complete reference and hands-on exercise set for locating elements with CSS selectors in Selenium WebDriver (Java). 
+Selenium delegates CSS selector evaluation to the browser's native `querySelector`/`querySelectorAll` engine, so you 
+get everything the browser supports; essentially CSS Selectors Level 4, minus a few pseudo-classes that don't make 
+sense for element location.
 
-Exercises target [saucedemo.com](https://www.saucedemo.com), which uses `data-test` attributes consistently and makes an excellent teaching target for modern, resilient selector patterns.
+Exercises target [saucedemo.com](https://www.saucedemo.com), which uses `data-test` attributes consistently and makes an excellent teaching 
+target for modern, resilient selector patterns.
+
+**Additional Reference**: [http://pragmatictestlabs.com/2021/01/05/mastering-css-for-selenium-test-automation-2/](http://pragmatictestlabs.com/2021/01/05/mastering-css-for-selenium-test-automation-2/)
 
 ---
 
