@@ -14,7 +14,7 @@ target for modern, resilient selector patterns.
 
 ## Table of Contents
 
-**Part 1; Reference**
+**Part 1 Reference**
 1. [Basics: Element, ID, Class](#1-the-basics-element-id-class)
 2. [Attribute Selectors](#2-attribute-selectors)
 3. [Combinators](#3-combinators-navigating-the-tree)
@@ -27,7 +27,7 @@ target for modern, resilient selector patterns.
 10. [What CSS Cannot Do](#10-what-css-cannot-do)
 11. [Selenium-Specific Notes](#11-selenium-specific-notes)
 
-**Part 2; Exercises on saucedemo.com**
+**Part 2 Exercises on saucedemo.com**
 
 - [Section 1: Basics](#section-1-basics-id-class-type)
 - [Section 2: Attribute Selectors](#section-2-attribute-selectors)
