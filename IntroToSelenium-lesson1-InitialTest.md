@@ -1,4 +1,5 @@
-# Intro to Selenium — Session 1: Setup and First Test
+# Intro to Selenium
+# Session 1: Setup and First Test
 
 ## 1. Overview
 
@@ -6,9 +7,9 @@ This session introduces Selenium WebDriver, a library that automates real web br
 
 ### 1.1 What is Selenium?
 
-Selenium is an open-source library that controls a real web browser programmatically. When you run a Selenium test, an actual Chrome (or Firefox, Edge, etc.) window opens on your machine, and your code drives it: clicking buttons, typing into fields, reading text from the page — everything a human user would do, but automated.
+Selenium is an open-source library that controls a real web browser programmatically. When you run a Selenium test, an actual Chrome (or Firefox, Edge, etc.) window opens on your machine, and your code drives it: clicking buttons, typing into fields, reading text from the page; everything a human user would do, but automated.
 
-Selenium is used for end-to-end testing of web applications. It verifies that the user interface works correctly from the user's perspective. It is not an HTTP client — it does not make REST API calls. It does not test backend logic directly. It tests what a real user sees and does in a browser.
+Selenium is used for end-to-end testing of web applications. It verifies that the user interface works correctly from the user's perspective. It is not an HTTP client; it does not make REST API calls. It does not test backend logic directly. It tests what a real user sees and does in a browser.
 
 Selenium supports multiple programming languages (Java, Python, C#, Ruby, JavaScript). In this course we use the Java bindings.
 
@@ -37,7 +38,7 @@ The site provides several test user accounts, each designed to produce different
 
 All accounts use the same password: `secret_sauce`
 
-These accounts are listed on the login page itself — this is a practice site, not a real application.
+These accounts are listed on the login page itself; this is a practice site, not a real application.
 
 ---
 
@@ -49,12 +50,12 @@ This section walks through creating a GitHub repository, cloning it locally, and
 
 Before starting, make sure the following are installed on your machine:
 
-- **Java 17 or later** — You can verify by running `java -version` in a terminal. If Java is not installed, download it from https://adoptium.net (Temurin is a good default choice).
-- **Gradle** — You can verify by running `gradle --version`. If Gradle is not installed, follow the instructions at https://gradle.org/install/. On macOS you can use `brew install gradle`; on Windows, the Gradle website provides an installer.
-- **Git** — You can verify by running `git --version`. If Git is not installed, download it from https://git-scm.com/downloads.
-- **Chrome browser** — Selenium will automate this browser. Any recent version is fine.
-- **A GitHub account** — If you don't have one, create a free account at https://github.com.
-- **An IDE** — IntelliJ IDEA Community Edition (free) or VS Code with the Java Extension Pack. IntelliJ is recommended if you have no preference.
+- **Java 17 or later**: You can verify by running `java -version` in a terminal. If Java is not installed, download it from https://adoptium.net (Temurin is a good default choice).
+- **Gradle**: You can verify by running `gradle --version`. If Gradle is not installed, follow the instructions at https://gradle.org/install/. On macOS you can use `brew install gradle`; on Windows, the Gradle website provides an installer.
+- **Git**: You can verify by running `git --version`. If Git is not installed, download it from https://git-scm.com/downloads.
+- **Chrome browser**: Selenium will automate this browser. Any recent version is fine.
+- **A GitHub account**: If you don't have one, create a free account at https://github.com.
+- **An IDE**: IntelliJ IDEA Community Edition (free) or VS Code with the Java Extension Pack. IntelliJ is recommended if you have no preference.
 
 ### 2.2 Create the GitHub Repository
 
@@ -63,7 +64,7 @@ Before starting, make sure the following are installed on your machine:
 3. Name the repository `intro-to-selenium` (or another name of your choosing).
 4. Add a short description, e.g. "Selenium WebDriver practice project."
 5. Set the repository to **Public** (or Private if you prefer).
-6. Check **Add a README file** — this creates an initial commit so the repo is ready to clone.
+6. Check **Add a README file**: this creates an initial commit so the repo is ready to clone.
 7. Under **Add .gitignore**, select the **Gradle** template. This prevents build output, IDE files, and other generated files from being committed. If the Gradle template is not available, you can add a `.gitignore` file manually later.
 8. Click **Create repository**.
 
@@ -101,11 +102,11 @@ Gradle will ask a series of interactive questions. Choose the following options:
 
 After Gradle init completes, your project directory should contain:
 
-- `build.gradle` (or `app/build.gradle` depending on your Gradle version) — the build configuration
-- `settings.gradle` — project settings
-- `src/main/java/org/example/` — application source directory (we won't use this much)
-- `src/test/java/org/example/` — test source directory (this is where our Selenium tests go)
-- `gradlew` and `gradlew.bat` — Gradle wrapper scripts
+- `build.gradle` (or `app/build.gradle` depending on your Gradle version); the build configuration
+- `settings.gradle`: project settings
+- `src/main/java/org/example/`: application source directory (we won't use this much)
+- `src/test/java/org/example/`: test source directory (this is where our Selenium tests go)
+- `gradlew` and `gradlew.bat`:  Gradle wrapper scripts
 
 Verify the project works by running the generated sample test:
 
@@ -117,7 +118,7 @@ On Windows, use `gradlew.bat test` instead. You should see `BUILD SUCCESSFUL`. I
 
 ### 2.5 Clean Up Generated Files
 
-Gradle init creates a sample application class (`App.java`) and a sample test class (`AppTest.java`). You can delete these — we will write our own test class from scratch:
+Gradle init creates a sample application class (`App.java`) and a sample test class (`AppTest.java`). You can delete these; we will write our own test class from scratch:
 
 - Delete `src/main/java/org/example/App.java`
 - Delete `src/test/java/org/example/AppTest.java`
@@ -128,11 +129,11 @@ Keep the directory structure intact. You should still have the empty directories
 
 The project requires three dependencies, all with `testImplementation` scope.
 
-**Selenium Java** — `org.seleniumhq.selenium:selenium-java`
+**Selenium Java**: `org.seleniumhq.selenium:selenium-java`
 
 This is the core Selenium library. It provides the `WebDriver` interface, the `ChromeDriver` class, the `By` class for locating elements, and the `WebElement` interface for interacting with page elements. The current version is 4.41.0.
 
-**WebDriverManager** — `io.github.bonigarcia:webdrivermanager`
+**WebDriverManager**: `io.github.bonigarcia:webdrivermanager`
 
 This is the dependency that deserves the most explanation, because without understanding the problem it solves, students often don't understand why it exists.
 
@@ -147,7 +148,7 @@ Before WebDriverManager existed, the standard setup process was:
 5. Tell Selenium where to find it, usually with: `System.setProperty("webdriver.chrome.driver", "/path/to/chromedriver");`
 6. When Chrome auto-updates (which it does frequently), repeat steps 1–5
 
-This is fragile, manual, and causes a lot of broken test environments — especially in team settings where everyone has different Chrome versions.
+This is fragile, manual, and causes a lot of broken test environments; especially in team settings where everyone has different Chrome versions.
 
 **WebDriverManager automates this entire process.** When you call `WebDriverManager.chromedriver().setup()`, it:
 
@@ -162,7 +163,7 @@ WebDriverManager is an open-source project (Apache 2.0 license) created and main
 
 Note: Selenium 4.6+ includes a built-in feature called Selenium Manager that does something similar. However, WebDriverManager is more established, more explicit (you can see exactly what it's doing), and provides additional features. We use it in this course because the explicit setup call makes the driver management step visible rather than hidden.
 
-**JUnit Jupiter** — `org.junit.jupiter:junit-jupiter`
+**JUnit Jupiter**: `org.junit.jupiter:junit-jupiter`
 
 JUnit 5 is the test framework. It provides the `@Test` annotation, assertion methods like `assertEquals`, and the test lifecycle annotations (`@BeforeEach`, `@AfterEach`, etc.). Your Gradle build file must include `useJUnitPlatform()` in the `test` block so that Gradle knows to use JUnit 5.
 
@@ -182,7 +183,7 @@ intro-to-selenium/
     main/
       java/
         org/
-          example/          (empty — no application code in this project)
+          example/          (empty, no application code in this project)
     test/
       java/
         org/
@@ -202,9 +203,9 @@ This section describes the Selenium concepts you need for Session 1. Read throug
 
 Every Selenium test follows three phases:
 
-1. **Create** — Instantiate a WebDriver. This opens a browser window. For Chrome, you create a `ChromeDriver` object. Before creating it, WebDriverManager must have run its setup.
-2. **Interact** — Navigate to URLs, find elements, type text, click buttons, read content.
-3. **Quit** — Call `quit()` on the driver. This closes the browser window and releases all associated resources (processes, ports, temporary files).
+1. **Create**: Instantiate a WebDriver. This opens a browser window. For Chrome, you create a `ChromeDriver` object. Before creating it, WebDriverManager must have run its setup.
+2. **Interact**: Navigate to URLs, find elements, type text, click buttons, read content.
+3. **Quit**: Call `quit()` on the driver. This closes the browser window and releases all associated resources (processes, ports, temporary files).
 
 If you skip the quit step, the browser window stays open and the ChromeDriver process keeps running. Over time this consumes system resources and can cause port conflicts in subsequent test runs.
 
@@ -218,9 +219,9 @@ To interact with a page, you first need to locate the element you want to intera
 
 A `By` locator describes how to find an element in the page's HTML. There are several strategies (we will cover more in Session 2), but for Session 1 you need two:
 
-**By.id** — Finds an element by its HTML `id` attribute. This is the most reliable locator strategy because IDs are meant to be unique on a page. Example: if the HTML contains `<input id="user-name" />`, then `By.id("user-name")` locates that input.
+**By.id**: Finds an element by its HTML `id` attribute. This is the most reliable locator strategy because IDs are meant to be unique on a page. Example: if the HTML contains `<input id="user-name" />`, then `By.id("user-name")` locates that input.
 
-**By.className** — Finds an element by its CSS class name. Less precise than `By.id` because multiple elements can share the same class, but useful when an element has no ID.
+**By.className**: Finds an element by its CSS class name. Less precise than `By.id` because multiple elements can share the same class, but useful when an element has no ID.
 
 To discover element IDs and class names, use Chrome DevTools: right-click on an element in the browser and select "Inspect" to see its HTML attributes.
 
@@ -228,9 +229,9 @@ To discover element IDs and class names, use Chrome DevTools: right-click on an 
 
 Once you have a `WebElement`, you can interact with it:
 
-- **sendKeys(text)** — Types text into an input field
-- **click()** — Clicks the element (buttons, links, etc.)
-- **getText()** — Returns the visible text content of the element
+- **sendKeys(text)**: Types text into an input field
+- **click()**: Clicks the element (buttons, links, etc.)
+- **getText()**: Returns the visible text content of the element
 
 ### 3.5 Making Assertions
 
@@ -238,7 +239,7 @@ Use JUnit 5's `assertEquals(expected, actual)` to verify that the page is in the
 
 ---
 
-## 4. Requirements: Test 1 — Successful Login
+## 4. Requirements: Test 1: Successful Login
 
 ### 4.1 Functional Specification
 
@@ -270,7 +271,7 @@ Write a JUnit 5 test method that verifies a successful login to saucedemo.com.
 
 ---
 
-## 5. Requirements: Test 2 — Failed Login (Exercise)
+## 5. Requirements: Test 2: Failed Login (Exercise)
 
 ### 5.1 Functional Specification
 
@@ -296,7 +297,7 @@ Write a second test method in the same `LoginTest` class that verifies the error
 
 ### 5.2 Design Notes
 
-- The error message element does not have a simple HTML id. You will need to inspect the saucedemo login page using Chrome DevTools to determine how to locate it. This is intentional — inspecting elements in the browser is a fundamental skill in Selenium testing.
+- The error message element does not have a simple HTML id. You will need to inspect the saucedemo login page using Chrome DevTools to determine how to locate it. This is intentional; inspecting elements in the browser is a fundamental skill in Selenium testing.
 - **Hint:** Look for the `data-test` attribute on the error message container. The `By.cssSelector` method can match attributes using the syntax `[attribute='value']`.
 - Use `assertTrue` with the `String.contains()` method rather than `assertEquals` for the error message, since the full error text may include additional content like an icon character.
 
@@ -355,7 +356,7 @@ Notice that in your current test code, the `driver.quit()` call comes at the end
 
 Run one of your tests with a deliberately wrong assertion (for example, assert that the page title is `"Wrong"` instead of `"Products"`). Observe that Chrome stays open after the test fails.
 
-This is a real problem in practice — it leaves zombie browser processes consuming resources. Think about how you might fix this. We will address it properly in Session 2.
+This is a real problem in practice; it leaves zombie browser processes consuming resources. Think about how you might fix this. We will address it properly in Session 2.
 
 ### 7.2 Preview: Session 2
 
@@ -392,7 +393,7 @@ In Session 2, we will:
 - This usually means the cached ChromeDriver is out of date. Delete the WebDriverManager cache directory (typically `~/.cache/selenium` or `~/.m2/repository/webdriver`) and run again. WebDriverManager will download a fresh driver.
 
 **Test passes but Chrome stays open**
-- Make sure `driver.quit()` is being called. If the test fails before reaching that line, Chrome will stay open. This is expected for Session 1 — we fix it in Session 2.
+- Make sure `driver.quit()` is being called. If the test fails before reaching that line, Chrome will stay open. This is expected for Session 1; we fix it in Session 2.
 
 **Gradle build fails to resolve dependencies**
 - Make sure `mavenCentral()` is listed in the `repositories` block of your build file.
