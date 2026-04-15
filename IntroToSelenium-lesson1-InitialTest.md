@@ -55,7 +55,7 @@ Before starting, make sure the following are installed on your machine:
 - **Git**: You can verify by running `git --version`. If Git is not installed, download it from https://git-scm.com/downloads.
 - **Chrome browser**: Selenium will automate this browser. Any recent version is fine.
 - **A GitHub account**: If you don't have one, create a free account at https://github.com.
-- **An IDE**: IntelliJ IDEA Community Edition (free) or VS Code with the Java Extension Pack. IntelliJ is recommended if you have no preference.
+- **An IDE**: Eclipse, IntelliJ IDEA Community Edition (free) or VS Code with the Java Extension Pack. IntelliJ is recommended if you have no preference, but any IDE will work. 
 
 ### 2.2 Create the GitHub Repository
 
