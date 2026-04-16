@@ -12,7 +12,9 @@ you're calling that built-in engine directly.
 Exercises target [saucedemo.com](https://www.saucedemo.com), which uses `data-test` attributes consistently and makes an excellent teaching 
 target for comparing XPath and CSS selector approaches side by side.
 
-**Additional Reference**: [https://devhints.io/xpath](https://devhints.io/xpath)
+**Additional References**: 
+* [https://devhints.io/xpath](https://devhints.io/xpath)
+* [http://pragmatictestlabs.com/2020/01/28/mastering-xpath-for-selenium-test-automation-engineers/](http://pragmatictestlabs.com/2020/01/28/mastering-xpath-for-selenium-test-automation-engineers/)
 
 ---
 
