@@ -2,7 +2,7 @@
 
 A complete reference and hands-on exercise set for locating elements with XPath in Selenium WebDriver (Java). 
 Selenium delegates XPath evaluation to the browser's native XPath engine, which implements XPath 1.0. Despite being 
-an older spec (1999), XPath 1.0 is the only version browsers support natively, and it remains genuinely powerful; 
+an older spec (1999), XPath 1.0 is the only version browsers support natively, and it remains useful; 
 it can do things CSS selectors still cannot.
 
 Note: XPath was originally designed for navigating XML documents. HTML is close enough to XML that the same language 
@@ -40,7 +40,7 @@ target for comparing XPath and CSS selector approaches side by side.
 ## 1. The Basics: Path Expressions
 
 XPath expressions describe a path through the DOM tree, much like a file system path. The two fundamental forms are 
-absolute paths (starting from the document root) and relative paths (starting from anywhere).
+absolute paths (starting from the document root) and relative paths (starting from anywhere). Use a single slash for absolute paths, and a double slash for relative paths.
 
 ```java
 driver.findElement(By.xpath("/html/body/div/input"));   // absolute path from the root
