@@ -1,4 +1,6 @@
 .gitattributes
+bin
+.settings
 .idea/
 .project
 .gradle
