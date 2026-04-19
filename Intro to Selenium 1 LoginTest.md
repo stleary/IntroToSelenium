@@ -136,9 +136,8 @@ You should see `BUILD SUCCESSFUL`. If so, the project is set up correctly.
 
 ### 2.5 Clean Up Generated Files
 
-Gradle init creates a sample application class (`App.java`) and a sample test class (`AppTest.java`). 
-
-Keep the directory structure intact. You should still have the empty directories `src/main/java/org/example/` and `src/test/java/org/example/`.
+Gradle init creates a sample application class (`App.java`) and a sample test class (`AppTest.java`). You can keep these for now.  
+Keep the directory structure intact. You should have the empty directories, `src/main/java/org/example/` and `src/test/java/org/example/`.
 
 ### 2.6 Dependencies
 
@@ -268,7 +267,7 @@ But first, login to saucedemo manually from the browser, to better understand wh
 
 - Create a new class src/test/java/org/example/LoginTest.java  
 - Add a class variable:   
-  WebDriver webdriver;  
+  WebDriver webDriver;  
 - Add a public test method: 
 
 | @Test                        // Tells JUnit that this is a test methodpublic void testlogin() {} |
@@ -280,23 +279,36 @@ But first, login to saucedemo manually from the browser, to better understand wh
 
    `WebDriverManager.chromedriver().setup()`  
      
-2. Initialize the webdriver with a new ChromeDriver() instance  
+2. Initialize the webdriver with a new ChromeDriver() instance
+
+|      webDriver \= new ChromeDriver(); |
+| :---- |
+
+   
+
 3. Navigate to the test website:
 
-   webdriver.get("[https://www.saucedemo.com](https://www.saucedemo.com)");
+|      webDriver.get("https://www.saucedemo.com"); |
+| :---- |
 
 4. Locate the username input field (HTML id: `user-name`) and set it to `standard_user:`
 
-| WebElement username \=  webdriver.findElement(By.id("user-name"); username.sendKeys("standard\_user"); |
+|      WebElement username \=  webDriver.findElement(By.id("user-name");     username.sendKeys("standard\_user"); |
 | :---- |
 
 5. Locate the password input field (HTML id: `password`) and set it to `secret_sauce` by calling **findElement**() and **sendKeys**()  
+   WebElement password \= webDriver.findElement([By.id](http://By.id)("password"));  
+   password.sendKeys("secret\_sauce");
+
 6. Locate the login button (HTML id: `login-button`) and click it by calling **findElement**() and **click**()  
+   WebElement submit \= webDriver.findElement([By.id](http://By.id)("login-button"));  
+   submit.click();
+
 7. The browser should now be on the products page
 
 **Verification:**
 
-- Locate the page title element (CSS class: `title`) by calling **findElement**(), and assert that its text content equals `Products`  by calling **getText**():
+- When Selenium clicks the submit button, a new products page is displayed. Locate the page title element (CSS class: `title`) by calling **findElement**(), and assert that its text content equals `Products`  by calling **getText**():
 
 | WebElement title \= webdriver.findElement(By.classname("title"));assertEquals("Products", title.getText()); |
 | :---- |
@@ -305,7 +317,7 @@ But first, login to saucedemo manually from the browser, to better understand wh
 
 - The browser is closed and the driver resources are released:
 
-| webdriver.quit() |
+| webdriver.quit(); |
 | :---- |
 
 ### 4.2 Design Notes
