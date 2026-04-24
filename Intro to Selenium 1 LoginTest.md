@@ -277,7 +277,7 @@ But first, login to saucedemo manually from the browser, to better understand wh
 
 1. Setup the webdrivermanager:
 
-   `WebDriverManager.chromedriver().setup()`  
+   `WebDriverManager.chromedriver().setup();`  
      
 2. Initialize the webdriver with a new ChromeDriver() instance
 
@@ -317,7 +317,7 @@ But first, login to saucedemo manually from the browser, to better understand wh
 
 - The browser is closed and the driver resources are released:
 
-| webdriver.quit(); |
+| webDriver.quit(); |
 | :---- |
 
 ### 4.2 Design Notes

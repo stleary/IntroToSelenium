@@ -1,4 +1,5 @@
 .gitattributes
+.vscode
 bin
 .settings
 .idea/
