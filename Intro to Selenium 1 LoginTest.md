@@ -238,9 +238,9 @@ A `By` locator describes how to find an element in the page's HTML. There are se
 
 **By.id**; Finds an element by its HTML `id` attribute. This is the most reliable locator strategy because IDs are meant to be unique on a page. Example: if the HTML contains `<input id="user-name" />`, then `By.id("user-name")` locates that input.
 
-**By.className**; Finds an element by its CSS class name. Less precise than `By.id` because multiple elements can share the same class, but useful when an element has no ID.
+**By.className**; Finds an element by its CSS class attribute. Less precise than `By.id` because multiple elements can share the same class, but useful when an element has no ID.
 
-To discover element IDs and class names, use Chrome DevTools: right-click on an element in the browser and select "Inspect" to see its HTML attributes.
+To discover element IDs and class attributes, use Chrome DevTools: right-click on an element in the browser and select "Inspect" to see its HTML attributes.
 
 ### 3.4 Interacting with Elements
 
@@ -256,7 +256,7 @@ Use JUnit 5's `assertEquals(expected, actual)` to verify that the page is in the
 
 ---
 
-## 4\. Requirements: Test 1; Successful Login
+## 4\. Requirements: Test 1 Successful Login
 
 ### 4.1 Functional Specification
 
@@ -328,7 +328,7 @@ But first, login to saucedemo manually from the browser, to better understand wh
 
 ---
 
-## 5\. Requirements: Test 2; Failed Login (Exercise)
+## 5\. Requirements: Test 2 Failed Login (Exercise)
 
 ### 5.1 Functional Specification
 
