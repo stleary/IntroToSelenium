@@ -2,7 +2,7 @@
 
 **Intro to Selenium**
 
-[1. LoginTest](IntroToSelenium-lesson1-InitialTest.md)
+Lesson notes and other docs are in the lesson1Docs folder.
 
 
 **Other sitess to test on:**
