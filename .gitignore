@@ -1,4 +1,7 @@
 .gitattributes
+.vscode/
+bin
+.settings/
 .idea/
 .project
 .gradle
