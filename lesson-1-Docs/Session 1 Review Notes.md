@@ -40,3 +40,9 @@ Often you will need to test many different elements and pages as part of an end-
 We imported and used the JUnit testing library to execute our tests. This gave us our @Test annotation that runs each test method automatically. It also gave us the assertEquals() and assertTrue() methods to confirm a successful test. Later, it will give us more tools for testing.
 
 Rule number 1 applies here, too. Just use a small subset of the testing lib to accomplish your immediate goal in a simple way. For most tests, this all you will need. 
+
+4. # Use Gradle for Builds
+
+Gradle is a widely used build program that handles all of the build details for you. It will help you import external libraries, and package your software for delivery to the user. Most Java shops use Gradle or Maven (closely related, but more complex). 
+
+Also, Rule number 1, just learn a subset at first so you can get started. 
