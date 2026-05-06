@@ -1,7 +1,5 @@
 package org.example;
 
-import io.github.bonigarcia.wdm.WebDriverManager;
-import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
@@ -16,7 +14,6 @@ public class LoginTest {
 
     @Test
     void testLogin() {
-        WebDriverManager.chromedriver().setup();
         webDriver = new ChromeDriver();
         webDriver.get("https://www.saucedemo.com");
         WebElement name = webDriver.findElement(By.id("user-name"));
@@ -33,7 +30,6 @@ public class LoginTest {
 
     @Test
     void testLockedOut() {
-        WebDriverManager.chromedriver().setup();
         webDriver = new ChromeDriver();
         webDriver.get("https://www.saucedemo.com");
         WebElement name = webDriver.findElement(By.id("user-name"));
