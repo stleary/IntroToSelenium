@@ -19,7 +19,6 @@ dependencies {
     // Use JUnit Jupiter for testing.
     testImplementation libs.junit.jupiter
     testImplementation 'org.seleniumhq.selenium:selenium-java:4.41.0'
-    testImplementation 'io.github.bonigarcia:webdrivermanager:6.3.4'
 
     testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
 

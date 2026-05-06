@@ -1,7 +1,13 @@
 .gitattributes
+<<<<<<< HEAD
 .vscode/
 bin
 .settings/
+=======
+.vscode
+bin
+.settings
+>>>>>>> 1-LoginTest
 .idea/
 .project
 .gradle

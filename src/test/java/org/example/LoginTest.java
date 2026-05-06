@@ -1,7 +1,8 @@
 package org.example;
 
-import io.github.bonigarcia.wdm.WebDriverManager;
-import org.junit.jupiter.api.*;
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -12,11 +13,6 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 
 public class LoginTest {
     private WebDriver webDriver;
-
-    @BeforeAll
-    static void beforeAll() {
-        //WebDriverManager.chromedriver().setup();
-    }
 
     @BeforeEach
     void beforeEach() {
