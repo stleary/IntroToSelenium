@@ -15,7 +15,7 @@ public class LoginTest {
 
     @BeforeAll
     static void beforeAll() {
-        WebDriverManager.chromedriver().setup();
+        //WebDriverManager.chromedriver().setup();
     }
 
     @BeforeEach

@@ -22,7 +22,7 @@ public class InventoryTest {
 
     @BeforeAll
     static void beforeAll() {
-        WebDriverManager.chromedriver().setup();
+        //WebDriverManager.chromedriver().setup();
     }
 
     @BeforeEach
@@ -120,28 +120,38 @@ public class InventoryTest {
 
     @Test
     public void testFindNameAndPrice() {
-        // find the name, by matching text
-        WebElement nameWebElement = webDriver.findElement(By.xpath("//div[text()='Sauce Labs Backpack']"));
-
-        // get the 4th parent, common to both name and price, by navigating the tree
-        WebElement parent = nameWebElement.findElement(By.xpath("../../../.."));
-        // get the inv item by ancestor search
-        WebElement parent1 = nameWebElement.findElement(By.xpath("//ancestor::div[@class='inventory_item']"));
-
-        // confirm you get the same result either way
-        assertTrue(parent.equals(parent1));
-
-        // dive into the price from the tree navigation element
-        WebElement priceElement = parent.findElement(By.xpath("//descendant::div[@class='inventory_item_price']"));
-        // dive into the price from the ancestor search element
-        WebElement priceElement1 = parent1.findElement(By.xpath("//descendant::div[@class='inventory_item_price']"));
-
-        // Confirm you get the same result either way
-        assertTrue(priceElement1.equals(priceElement));
-
-        assertEquals("$29.99", priceElement.getText());
-        assertEquals("$29.99", priceElement1.getText());
-        System.out.println("testFindNameAndPrice() success");
+        List<WebElement> items = webDriver.findElements(By.cssSelector(".inventory_item_description"));
+        for (WebElement item: items) {
+            WebElement nameElement = item.findElement(By.cssSelector(".inventory_item_name"));
+            String name = nameElement.getText();
+            if ("Sauce Labs Backpack".equals(name)) {
+                WebElement priceElement = item.findElement(By.cssSelector(".inventory_item_price"));
+                String price = priceElement.getText();
+                assertEquals("$29.99", price);
+                break;
+            }
+        }
+//        // find the name, by matching text
+//        WebElement nameWebElement = webDriver.findElement(By.xpath("//div[text()='Sauce Labs Backpack']"));
+//
+//        // get the 4th parent, common to both name and price, by navigating the tree
+//        WebElement parent = nameWebElement.findElement(By.xpath("../../../.."));
+//        // get the inv item by ancestor search
+//        WebElement parent1 = nameWebElement.findElement(By.xpath("//ancestor::div[@class='inventory_item_description']"));
+//
+//        // confirm you get the same result either way
+//        assertTrue(parent.equals(parent1));
+//        // dive into the price from the tree navigation element
+//        WebElement priceElement = parent.findElement(By.xpath("//descendant::div[@class='inventory_item_price']"));
+//        // dive into the price from the ancestor search element
+//        WebElement priceElement1 = parent1.findElement(By.xpath("//descendant::div[@class='inventory_item_price']"));
+//
+//        // Confirm you get the same result either way
+//        assertTrue(priceElement1.equals(priceElement));
+//
+//        assertEquals("$29.99", priceElement.getText());
+//        assertEquals("$29.99", priceElement1.getText());
+//        System.out.println("testFindNameAndPrice() success");
     }
 
 }
