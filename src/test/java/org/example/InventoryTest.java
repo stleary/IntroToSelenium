@@ -9,22 +9,23 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
 
+import java.time.Duration;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
+
+import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.Select;
+import org.openqa.selenium.support.ui.WebDriverWait;
 
 public class InventoryTest {
     private WebDriver webDriver;
-
-    @BeforeAll
-    static void beforeAll() {
-        //WebDriverManager.chromedriver().setup();
-    }
+    private WebDriverWait webDriverWait;
 
     @BeforeEach
     void beforeEach() {
         webDriver = new ChromeDriver();
+        webDriverWait = new WebDriverWait(webDriver, Duration.ofSeconds(10));
         webDriver.get("https://www.saucedemo.com");
         WebElement name = webDriver.findElement(By.id("user-name"));
         WebElement password = webDriver.findElement(By.id("password"));
@@ -43,6 +44,7 @@ public class InventoryTest {
 
     @Test
     public void testProductCount() {
+        webDriverWait.until(ExpectedConditions.visibilityOfElementLocated(By.cssSelector(".inventory_item")));
         List<WebElement> list = webDriver.findElements(By.cssSelector(".inventory_item"));
         assertEquals(6, list.size());
         System.out.println("testProductCount() success");
@@ -50,6 +52,7 @@ public class InventoryTest {
 
     @Test
     public void testProductNameElements() {
+        webDriverWait.until(ExpectedConditions.visibilityOfElementLocated(By.cssSelector(".inventory_item_name")));
         List<WebElement> webElements = webDriver.findElements(By.cssSelector(".inventory_item_name"));
         assertEquals(6, webElements.size());
         for (WebElement webElement : webElements) {
@@ -69,6 +72,7 @@ public class InventoryTest {
 
     @Test
     public void testItemPrice() {
+        webDriverWait.until(ExpectedConditions.visibilityOfElementLocated(By.cssSelector(".inventory_item_price")));
         List<WebElement> webElements = webDriver.findElements(By.cssSelector(".inventory_item_price"));
         assertEquals(6, webElements.size());
         for (WebElement webElement : webElements) {
@@ -80,11 +84,13 @@ public class InventoryTest {
 
     @Test
     public void testSortLowToHigh() {
+        webDriverWait.until(ExpectedConditions.visibilityOfElementLocated(By.cssSelector(".product_sort_container")));
         WebElement sortWebElement = webDriver.findElement(By.cssSelector(".product_sort_container"));
         Select select = new Select(sortWebElement);
         // this will update the display in selected order
         select.selectByValue("lohi");
 
+        webDriverWait.until(ExpectedConditions.visibilityOfElementLocated(By.cssSelector(".inventory_item_price")));
         List<WebElement> webElements = webDriver.findElements(By.cssSelector(".inventory_item_price"));
         assertEquals(6, webElements.size());
         double maxAmount = 0.0;
@@ -99,11 +105,13 @@ public class InventoryTest {
 
     @Test
     public void testSortZToA() {
+        webDriverWait.until(ExpectedConditions.visibilityOfElementLocated(By.cssSelector(".product_sort_container")));
         WebElement sortWebElement = webDriver.findElement(By.cssSelector(".product_sort_container"));
         Select select = new Select(sortWebElement);
         // this will update the display in selected order
         select.selectByValue("za");
 
+        webDriverWait.until(ExpectedConditions.visibilityOfElementLocated(By.cssSelector(".inventory_item_name")));
         List<WebElement> webElements = webDriver.findElements(By.cssSelector(".inventory_item_name"));
         assertEquals(6, webElements.size());
         String lastName = "zzzzz";
@@ -117,6 +125,7 @@ public class InventoryTest {
 
     @Test
     public void testFindNameAndPrice() {
+        webDriverWait.until(ExpectedConditions.visibilityOfElementLocated(By.cssSelector(".inventory_item_description")));
         List<WebElement> items = webDriver.findElements(By.cssSelector(".inventory_item_description"));
         for (WebElement item: items) {
             WebElement nameElement = item.findElement(By.cssSelector(".inventory_item_name"));
